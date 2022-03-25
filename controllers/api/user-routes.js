@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const { User } = require('../../models');
+const router = require("express").Router();
+const { User } = require("../../models");
 
-router.post('/', async (req, res) => {
+// /api/user
+router.post("/", async (req, res) => {
   try {
     const newUser = await User.create({
       username: req.body.username,
@@ -20,23 +21,23 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+// /api/user/login
+router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
         username: req.body.username,
       },
     });
-
+    //if user record in User table does not match the request body username
     if (!user) {
-      res.status(400).json({ message: 'No user account found!' });
+      res.status(400).json({ message: "Account login unsuccessful!" });
       return;
     }
-
+    //if password record in User table does not match the request body password
     const validPassword = user.checkPassword(req.body.password);
-
     if (!validPassword) {
-      res.status(400).json({ message: 'No user account found!' });
+      res.status(400).json({ message: "Account login unsuccessful!" });
       return;
     }
 
@@ -45,14 +46,15 @@ router.post('/login', async (req, res) => {
       req.session.username = user.username;
       req.session.loggedIn = true;
 
-      res.json({ user, message: 'You are now logged in!' });
+      res.json({ user, message: "Login successful!" });
     });
   } catch (err) {
-    res.status(400).json({ message: 'No user account found!' });
+    res.status(400).json({ message: "No user account exists!" });
   }
 });
 
-router.post('/logout', (req, res) => {
+// /api/user/logout
+router.post("/logout", (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();
