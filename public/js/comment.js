@@ -1,6 +1,5 @@
 const commentHandler = async function (event) {
   event.preventDefault();
-
   const postId = document.querySelector('input[name="post-id"]').value;
   const comment = document.querySelector('textarea[name="comment-body"]').value;
 
