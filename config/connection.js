@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 require("dotenv").config();
 
 // console.log(process.env.JAWSDB_URL);
+//JAWSDB URL will be undefined on localhost!!
 // create connection to our db
 const sequelize = process.env.JAWSDB_URL
   ? new Sequelize(process.env.JAWSDB_URL)
