@@ -8,8 +8,8 @@ router.get("/", async (req, res) => {
       include: [User],
     });
 
-    const posts = postData.map((post) => post.get({ plain: true }));
-
+    const posts = postData.map((x) => x.get({ plain: true }));
+    console.log(posts);
     res.render("all-posts", { posts });
   } catch (err) {
     res.status(500).json(err);
